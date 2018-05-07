@@ -19,9 +19,7 @@
 
 в форму продукта http://prntscr.com/jeujm6
   
-  <pre>
-    <input type="hidden" name="return_to" value="back" />
-  </pre>
+  <input type="hidden" name="return_to" value="back" />
   
   для сабмита дописываем http://prntscr.com/jeuk6k
   
