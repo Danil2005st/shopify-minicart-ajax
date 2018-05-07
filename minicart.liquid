@@ -1,0 +1,33 @@
+<div id="minicart-holder" class="cart-drawer">
+    <strong class="title">My cart</strong>
+  
+    <a href="#" class="close-btn"></a>
+  
+    <div id="minicart-content" {% if cart.item_count == 0 %} style="display:none"{% endif %}>
+    <div id="cart-items">
+      {% for item in cart.items %}          
+        <div class="cart-item" id="item-{{ item.variant_id }}">   
+                  
+          <div class="cart-item-image">
+            <a href="{{ item.product.url }}">
+              <img onError="this.style.display = 'none';" src="{{ item.product.featured_image | product_img_url: 'medium' }}" alt="{{ item.title | escape }}" />
+            </a>
+          </div>    
+                    
+                    <div class="cart-item-description">
+                      <a href="{{ item.product.url }}"><div class="title-product">{{ item.title }}</div></a>
+
+                      <div class="cart-product-qty">{{ item.quantity }}</div>
+
+                      <a href="/cart/change/{{ item.variant.id}}?quantity=0&amp;return_to=back" onclick="Shopify.removeItem('{{ item.variant_id }}'); return false;">Remove</a>
+                    </div>
+        </div>
+      {% endfor %}
+    </div>
+    </div>  
+  
+    <div class="cart-subtotal-row"><span class="cart-subtotal-text">Subtotal</span><span id="cart-total" class="cart-subtotal-price">{{ cart.total_price | money }}</span></div>
+  
+    <a href="/checkout" class="cart-checkout-button primary-btn">Checkout</a> 
+  
+</div>
