@@ -15,7 +15,7 @@
   
   {% include 'minicart' %}
   
-добавляем файл миникарты в assets
+добавляем файл миникарты в snippets
 
 в форму продукта http://prntscr.com/jeujm6
   
