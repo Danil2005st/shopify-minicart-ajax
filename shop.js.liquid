@@ -1,0 +1,64 @@
+Shopify.onError = function(error) {
+  alert('Error: ' + error.message);
+}
+
+Shopify.onCartUpdate = function(cart) {
+  jQuery('#cart-total').html(Shopify.formatMoney(cart.total_price));
+    jQuery('#minicart-quantity').html(cart.item_count);
+    jQuery('#cart-items').empty();
+  
+    var notificationItemsCounter = jQuery(".notification-area.cart .item-count"),
+        notificationPrice = jQuery(".notification-area.cart .price");
+  
+    if(cart.items.length > 0){
+      jQuery.each(cart.items, function(key, item) {
+        itemDiv           = jQuery(document.createElement('div'));
+        itemDiv.context.className = 'cart-item';
+        itemDiv.context.id        = 'item-'+item.variant_id;
+        if(item.image) {
+          itemDiv.context.innerHTML = '<div class="cart-item-image"><a href=\"'+item.url+'\"><img onError=\"this.style.display = \'none\';\" src=\"' + Shopify.resizeImage(item.image, 'medium') + '\" alt=\"' + item.title + '\" /></a></div>';
+        }
+        itemDiv.context.innerHTML = itemDiv.context.innerHTML + '<div class="cart-item-description"><a href=\"'+item.url+'\"><div class="title-product">' + truncateString(item.title, 18) + '</div></a><div class="cart-product-qty">' + item.quantity + '</div>' +
+          ' <a href=\"/cart/change/'+item.variant_id+'?quantity=0\" onclick=\"Shopify.removeItem(' + item.variant_id + ');return false\">Remove</a></div>';
+        jQuery('#cart-items').append(itemDiv);
+      });
+      jQuery("#minicart-content").show();
+      
+      if(notificationItemsCounter.length > 0 && notificationPrice.length > 0){
+        notificationItemsCounter.text(cart.item_count);
+        notificationPrice.text(Shopify.formatMoney(cart.total_price));
+      }
+    }
+}  
+
+function truncateString(str, length) {
+  return str.length > length ? str.substring(0, length - 3) + '...' : str
+}
+
+Shopify.onItemAdded = function(line_item) { 
+  Shopify.getCart(function(cart){
+    Shopify.onCartUpdate(cart);
+  }); 
+}
+
+var Showroom = {
+      onVariantChange: function(select) {
+      },
+      updatePrice: function(product_id) {
+        {% if settings.display_quantity_display %}
+          {% if settings.display_quantity_dropdown == 'dropdown' %}
+            var field = jQuery('#product-quantity-'+product_id+' option:selected').val();
+          {% elsif settings.display_quantity_dropdown == 'field' %}
+            var field = jQuery('#product-quantity-'+product_id).val();
+          {% endif %}
+          var variant_price = parseFloat(jQuery('#price-'+product_id).val());
+          var variant_compare_price = parseFloat(jQuery('#price-compare-'+product_id).val());
+          if(variant_price < variant_compare_price){
+            var price = Shopify.formatMoney((variant_price * field), Shopify.money_format) + " <del>" + Shopify.formatMoney((variant_compare_price * field), Shopify.money_format) + "</del>";
+          } else {
+            var price = Shopify.formatMoney((variant_price * field), Shopify.money_format);
+          }
+          jQuery('#price-field-'+product_id).html(price);
+        {% endif %}
+      }
+  }
