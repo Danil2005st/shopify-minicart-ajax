@@ -14,7 +14,7 @@
 в header.liquid прописываем qty
 и
 добавляем подключение миникарты 
-  <pre>
+  <code>
 <a href="" class="site-header__cart">
   <span>{{ 'layout.cart.title' | t }}</span>
 
@@ -28,7 +28,7 @@
     </div>
 </a>
 {% include 'minicart' %}
-</pre>
+</code>
   
 добавляем файл миникарты в snippets
 
