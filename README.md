@@ -1,3 +1,5 @@
+  <code>
+
 # shopify-minicart-ajax
 
 
@@ -14,7 +16,7 @@
 в header.liquid прописываем qty
 и
 добавляем подключение миникарты 
-  <code>
+
 <a href="" class="site-header__cart">
   <span>{{ 'layout.cart.title' | t }}</span>
 
@@ -28,7 +30,7 @@
     </div>
 </a>
 {% include 'minicart' %}
-</code>
+
   
 добавляем файл миникарты в snippets
 
@@ -43,3 +45,5 @@
   
   
   готово
+  
+  </code>
