@@ -4,13 +4,11 @@
 
 
 прописываем подключения
-<code>
   <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'api.jquery.js' | shopify_asset_url }}" defer="defer"></script><!--<![endif]-->
   <!--[if lte IE 9]><script src="{{ 'api.jquery.js' | shopify_asset_url }}"></script><![endif]-->
 
   <!--[if (gt IE 9)|!(IE)]><!--><script src="{{ 'shop.js' | asset_url }}" defer="defer"></script><!--<![endif]-->
   <!--[if lte IE 9]><script src="{{ 'shop.js' | asset_url }}"></script><![endif]-->
-  </code>
 добавляем в assets shop.js.liquid
 
 в header.liquid прописываем qty
