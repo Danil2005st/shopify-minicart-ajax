@@ -13,7 +13,7 @@
 добавляем подключение миникарты 
 <pre>
   <code>
-  <a href="" class="site-header__cart">
+  <a href="#" class="site-header__cart">
     <span>{{ 'layout.cart.title' | t }}</span>
   
       <div id="CartCount" class="site-header__cart-count">
