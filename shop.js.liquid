@@ -9,18 +9,22 @@ Shopify.onCartUpdate = function(cart) {
   
     var notificationItemsCounter = jQuery(".notification-area.cart .item-count"),
         notificationPrice = jQuery(".notification-area.cart .price");
-  
+
+    console.log(cart.items, 9153);
+
     if(cart.items.length > 0){
       jQuery.each(cart.items, function(key, item) {
         itemDiv           = jQuery(document.createElement('div'));
-        itemDiv.context.className = 'cart-item';
-        itemDiv.context.id        = 'item-'+item.variant_id;
+        itemDiv.addClass = 'cart-item';
+        itemDiv.attr('id', 'item-'+item.variant_id);
+        
         if(item.image) {
-          itemDiv.context.innerHTML = '<div class="cart-item-image"><a href=\"'+item.url+'\"><img onError=\"this.style.display = \'none\';\" src=\"' + Shopify.resizeImage(item.image, 'medium') + '\" alt=\"' + item.title + '\" /></a></div>';
+          itemDiv.innerHTML = '<div class="cart-item-image"><a href=\"'+item.url+'\"><img onError=\"this.style.display = \'none\';\" src=\"' + Shopify.resizeImage(item.image, 'medium') + '\" alt=\"' + item.title + '\" /></a></div>';
         }
-        itemDiv.context.innerHTML = itemDiv.context.innerHTML + '<div class="cart-item-description"><a href=\"'+item.url+'\"><div class="title-product">' + truncateString(item.title, 18) + '</div></a><div class="cart-product-qty">' + item.quantity + '</div>' +
+        itemDiv.innerHTML = itemDiv.innerHTML + '<div class="cart-item-description"><a href=\"'+item.url+'\"><div class="title-product">' + truncateString(item.title, 18) + '</div></a><div class="cart-product-qty">' + item.quantity + '</div>' +
           ' <a href=\"/cart/change/'+item.variant_id+'?quantity=0\" onclick=\"Shopify.removeItem(' + item.variant_id + ');return false\">Remove</a></div>';
-        jQuery('#cart-items').append(itemDiv);
+
+        jQuery('#cart-items').html(itemDiv.innerHTML);
       });
       jQuery("#minicart-content").show();
       
